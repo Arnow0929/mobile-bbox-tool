@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#14233a">
+  <title>离线 BBox 标注工具</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div><h1>离线 BBox 标注</h1><p id="projectStatus">尚未导入项目</p></div>
+    </header>
+
+    <section id="dropZone" class="import-card">
+      <strong>导入项目数据</strong>
+      <p>拖入 ZIP，或同时拖入任意名称的 query JSON 与图片/图片文件夹</p>
+      <div class="import-actions">
+        <label class="import-button">选择数据文件<input id="projectInput" type="file" multiple accept=".zip,.json,application/zip,application/json,image/png,image/jpeg"></label>
+        <label class="import-button light">选择项目文件夹<input id="folderInput" type="file" webkitdirectory directory multiple></label>
+      </div>
+    </section>
+
+    <section id="importProgress" class="progress-card hidden">
+      <strong id="importText">正在导入…</strong>
+      <div class="bar"><i id="importBar"></i></div>
+    </section>
+
+    <section class="task-card">
+      <div class="task-nav">
+        <label for="taskSelect">当前 Query</label>
+        <select id="taskSelect" disabled><option>请先导入项目</option></select>
+      </div>
+      <div class="query-block"><small>English</small><p id="queryEn">—</p></div>
+      <div class="query-block"><small>中文</small><p id="queryZh">—</p></div>
+    </section>
+
+    <section class="canvas-card">
+      <canvas id="canvas" class="hidden"></canvas>
+      <div id="emptyState" class="empty">请拖入数据包，或选择 query JSON 和图片文件</div>
+    </section>
+    <div id="coordinates" class="coordinates">手指按住图片拖动以创建标注框</div>
+
+    <section class="actions">
+      <button id="clearBtn" class="secondary" disabled>重新框选</button>
+      <button id="deleteBtn" class="danger" disabled>删除当前标注</button>
+      <button id="saveBtn" class="primary" disabled>保存并下一条</button>
+    </section>
+
+    <section class="export-card">
+      <div class="section-title"><strong>导出结果</strong><span id="exportSummary">已完成 0 / 0</span></div>
+      <button id="exportBtn" class="export" disabled>一键导出</button>
+      <div id="exportProgress" class="export-progress hidden">
+        <div class="bar"><i id="exportBar"></i></div>
+        <span id="exportText">正在生成：0 / 0</span>
+      </div>
+      <div id="shareArea" class="share-area hidden">
+        <button data-share="json">分享 JSON</button>
+        <button data-share="images">分享图片</button>
+        <button data-share="all">全部分享</button>
+        <button data-download="json" class="download">下载 JSON</button>
+        <button data-download="images" class="download">下载图片 ZIP</button>
+      </div>
+    </section>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+  </main>
+</body>
+</html>
